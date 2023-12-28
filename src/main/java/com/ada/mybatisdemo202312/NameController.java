@@ -12,7 +12,6 @@ public class NameController {
     @GetMapping("/names")
     public List<Name> names() {
         return nameMapper.findAll();
-
     }
 
 
