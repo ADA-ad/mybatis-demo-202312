@@ -22,4 +22,16 @@ public class NameSearchRequest {
     public String getContains() {
         return contains == null ? "" : contains;
     }
+
+    public void setStartsWith(String startsWith) {
+        this.startsWith = startsWith;
+    }
+
+    public void setEndsWith(String endsWith) {
+        this.endsWith = endsWith;
+    }
+
+    public void setContains(String contains) {
+        this.contains = contains;
+    }
 }
