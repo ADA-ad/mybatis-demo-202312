@@ -27,6 +27,6 @@ public class NameController {
         System.out.println(request.getStartsWith());
         System.out.println(request.getEndsWith());
         System.out.println(request.getContains());
-        return nameMapper.findByNameStartingWith(request.getStartsWith(), request.getEndsWith(), request.getContains());
+        return nameMapper.findByName(request.getStartsWith(), request.getEndsWith(), request.getContains());
     }
 }
