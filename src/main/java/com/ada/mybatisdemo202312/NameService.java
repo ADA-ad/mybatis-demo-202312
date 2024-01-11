@@ -25,7 +25,7 @@ public class NameService {
         if (name.isPresent()) {
             return name.get();
         } else {
-            throw new NameNotFoundException("user not found");
+            throw new NameNotFoundException("user could not be found");
         }
     }
 }
