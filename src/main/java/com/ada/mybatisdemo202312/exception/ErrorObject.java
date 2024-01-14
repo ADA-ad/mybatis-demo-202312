@@ -1,4 +1,4 @@
-package com.ada.mybatisdemo202312;
+package com.ada.mybatisdemo202312.exception;
 
 import lombok.Data;
 

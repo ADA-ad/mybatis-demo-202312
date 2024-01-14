@@ -1,4 +1,4 @@
-package com.ada.mybatisdemo202312;
+package com.ada.mybatisdemo202312.controller;
 
 public class NameSearchRequest {
     private String startsWith;

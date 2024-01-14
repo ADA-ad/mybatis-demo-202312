@@ -1,5 +1,8 @@
-package com.ada.mybatisdemo202312;
+package com.ada.mybatisdemo202312.Service;
 
+import com.ada.mybatisdemo202312.Mapper.NameMapper;
+import com.ada.mybatisdemo202312.entity.Name;
+import com.ada.mybatisdemo202312.exception.NameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,10 +25,12 @@ public class NameService {
 
     public Name findName(int id) {
         Optional<Name> name = this.nameMapper.findById(id);
-        if (name.isPresent()) {
-            return name.get();
-        } else {
-            throw new NameNotFoundException("user could not be found");
-        }
+
+        return name.orElseThrow(() -> new NameNotFoundException("user could not be found"));
+//        if (name.isPresent()) {
+//            return name.get();
+//        } else {
+//            throw new NameNotFoundException("user could not be found");
+//        }
     }
 }

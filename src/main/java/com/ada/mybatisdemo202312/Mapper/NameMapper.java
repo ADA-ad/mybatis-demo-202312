@@ -1,5 +1,6 @@
-package com.ada.mybatisdemo202312;
+package com.ada.mybatisdemo202312.Mapper;
 
+import com.ada.mybatisdemo202312.entity.Name;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

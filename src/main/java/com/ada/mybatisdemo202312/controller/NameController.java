@@ -1,14 +1,10 @@
-package com.ada.mybatisdemo202312;
+package com.ada.mybatisdemo202312.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.ada.mybatisdemo202312.entity.Name;
+import com.ada.mybatisdemo202312.Service.NameService;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 

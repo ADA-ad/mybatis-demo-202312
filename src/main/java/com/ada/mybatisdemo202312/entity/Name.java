@@ -1,4 +1,4 @@
-package com.ada.mybatisdemo202312;
+package com.ada.mybatisdemo202312.entity;
 
 public class Name {
     private int id;
@@ -23,4 +23,6 @@ public class Name {
     public String getEmail() {
         return email;
     }
+
+
 }
