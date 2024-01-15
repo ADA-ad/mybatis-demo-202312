@@ -1,6 +1,7 @@
 package com.ada.mybatisdemo202312.Service;
 
 import com.ada.mybatisdemo202312.Mapper.NameMapper;
+import com.ada.mybatisdemo202312.controller.request.NameUpdateRequest;
 import com.ada.mybatisdemo202312.entity.Name;
 import com.ada.mybatisdemo202312.exception.NameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class NameService {
     public NameService(NameMapper nameMapper) {
         this.nameMapper = nameMapper;
     }
+
     public List<Name> findAll() {
         return nameMapper.findAll();
     }
@@ -33,4 +35,26 @@ public class NameService {
 //            throw new NameNotFoundException("user could not be found");
 //        }
     }
+
+    public Name insert(String name, String email) {
+        Name newname = new Name(name, email);
+        nameMapper.insert(newname);
+        return newname;
+    }
+
+    public Name updateName(Integer id, NameUpdateRequest nameUpdateRequest) {
+
+            Name name = nameMapper.findById(id);
+            name.setName(nameUpdateRequest.getName());
+            name.setEmail(nameUpdateRequest.getEmail());
+            nameMapper.updateName(name);
+            return name;
+    }
+
+    public Optional<Name> deleteName(Integer id) {
+        Optional<Name> name = nameMapper.findById(id);
+        nameMapper.deleteName(id);
+        return name;
+    }
+
 }

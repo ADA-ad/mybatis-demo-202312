@@ -1,8 +1,7 @@
 package com.ada.mybatisdemo202312.Mapper;
 
 import com.ada.mybatisdemo202312.entity.Name;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +17,13 @@ public interface NameMapper {
 
     @Select("SELECT * FROM names WHERE id = #{id}")
     Optional<Name> findById(int id);
+    @Insert("INSERT INTO names (name, email) VALUES (#{name}, #{email})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    void insert(Name name);
+
+    @Update("UPDATE names SET name = #{name}, email = #{email} WHERE id = #{id}")
+    void updateName(Name name);
+
+    @Delete("DELETE FROM names WHERE id = #{id}")
+    void deleteName(int id);
 }

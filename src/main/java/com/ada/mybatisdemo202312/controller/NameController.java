@@ -1,10 +1,17 @@
 package com.ada.mybatisdemo202312.controller;
 
+import com.ada.mybatisdemo202312.controller.request.NameCreateRequest;
+import com.ada.mybatisdemo202312.controller.request.NameUpdateRequest;
+import com.ada.mybatisdemo202312.controller.response.NameCreateResponse;
 import com.ada.mybatisdemo202312.entity.Name;
 import com.ada.mybatisdemo202312.Service.NameService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 
@@ -45,5 +52,29 @@ public class NameController {
 //                "path", request.getRequestURI());
 //        return new ResponseEntity(body, HttpStatus.NOT_FOUND);
 //    }
+    @PostMapping("/names")
+    public ResponseEntity<NameCreateResponse> insert(@RequestBody NameCreateRequest nameRequest,
+                                                     UriComponentsBuilder uriComponentsBuilder) {
+        Name name = nameService.insert(nameRequest.getName(), nameRequest.getEmail());
+        URI location = uriComponentsBuilder.path("/names/{id}").buildAndExpand(name.getId()).toUri();
+        NameCreateResponse body = new NameCreateResponse("name created", "email created");
+        return ResponseEntity.created(location).body(body);
+    }
+
+    @PatchMapping("/names/{id}")
+    public ResponseEntity<NameCreateResponse> updateName(@PathVariable Integer id,
+                                                         @RequestBody NameUpdateRequest nameUpdateRequest,
+                                                         UriComponentsBuilder uriComponentsBuilder) {
+        Name name = nameService.updateName(id, nameUpdateRequest);
+        URI location = uriComponentsBuilder.path("/names/{id}").buildAndExpand(name.getId()).toUri();
+        NameCreateResponse body = new NameCreateResponse("name updated","email updated");
+        return ResponseEntity.created(location).body(body);
+    }
+    @DeleteMapping("/names/delete/{id}")
+    public ResponseEntity<NameCreateResponse> deleteName(@PathVariable Integer id) {
+        Optional<Name> name = nameService.deleteName(id);
+        NameCreateResponse body = new NameCreateResponse("name deleted","email deleted");
+        return ResponseEntity.ok(body);
+    }
 
 }
