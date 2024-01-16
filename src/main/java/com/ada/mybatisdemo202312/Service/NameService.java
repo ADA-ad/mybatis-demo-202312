@@ -42,14 +42,17 @@ public class NameService {
         return newname;
     }
 
-//    public Name updateName(Integer id, NameUpdateRequest nameUpdateRequest) {
-//
-//            Name name = nameMapper.findById(id);
-//            name.setName(nameUpdateRequest.getName());
-//            name.setEmail(nameUpdateRequest.getEmail());
-//            nameMapper.updateName(name);
-//            return name;
-//    }
+    public Name updateName(Integer id, NameUpdateRequest nameUpdateRequest) {
+            Name name = nameMapper.findById(id).orElseThrow(() -> new NameNotFoundException("user could not be found"));
+            if (nameUpdateRequest.getName() != null) {
+                name.setName(nameUpdateRequest.getName());
+            }
+            if (nameUpdateRequest.getEmail() != null) {
+                name.setEmail(nameUpdateRequest.getEmail());
+            }
+            nameMapper.updateName(name);
+            return name;
+    }
 
     public Optional<Name> deleteName(Integer id) {
         Optional<Name> name = nameMapper.findById(id);

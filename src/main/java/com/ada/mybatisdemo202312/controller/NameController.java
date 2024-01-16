@@ -6,6 +6,7 @@ import com.ada.mybatisdemo202312.controller.response.NameCreateResponse;
 import com.ada.mybatisdemo202312.entity.Name;
 import com.ada.mybatisdemo202312.Service.NameService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -53,7 +54,7 @@ public class NameController {
 //        return new ResponseEntity(body, HttpStatus.NOT_FOUND);
 //    }
     @PostMapping("/names")
-    public ResponseEntity<NameCreateResponse> insert(@RequestBody NameCreateRequest nameRequest,
+    public ResponseEntity<NameCreateResponse> insert(@RequestBody @Validated NameCreateRequest nameRequest,
                                                      UriComponentsBuilder uriComponentsBuilder) {
         Name name = nameService.insert(nameRequest.getName(), nameRequest.getEmail());
         URI location = uriComponentsBuilder.path("/names/{id}").buildAndExpand(name.getId()).toUri();
