@@ -1,6 +1,7 @@
 package com.ada.mybatisdemo202312.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
@@ -18,7 +19,7 @@ import java.util.*;
 //@RestControllerAdvice
 @ControllerAdvice
 public class GlobalExceptionHandler {
-        @ExceptionHandler(value = NameNotFoundException.class)
+    @ExceptionHandler(value = NameNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleUserNotFoundException(
             NameNotFoundException e, HttpServletRequest request) {
         Map<String, String> body = Map.of(
@@ -38,46 +39,37 @@ public class GlobalExceptionHandler {
             error.put("message", fieldError.getDefaultMessage());
             errors.add(error);
         });
+//        return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
         ErrorResponse errorResponse =
-                new ErrorResponse() {
-                    @Override
-                    public HttpStatusCode getStatusCode() {
-                        return null;
-                    }
-
-                    @Override
-                    public ProblemDetail getBody() {
-                        return null;
-                    }
-                };
+                new ErrorResponse(HttpStatus.BAD_REQUEST, "validation error", errors);
         return ResponseEntity.badRequest().body(errorResponse);
-
-//        /**
-//         * エラーレスポンスのクラス
-//         */
-//        final class ErrorResponse {
-//            private final HttpStatus status;
-//            private final String message;
-//            private final List<Map<String, String>> errors;
-//
-//            public ErrorResponse(HttpStatus status, String message, List<Map<String, String>> errors) {
-//                this.status = status;
-//                this.message = message;
-//                this.errors = errors;
-//            }
-//
-//            public HttpStatus getStatus() {
-//                return status;
-//            }
-//
-//            public String getMessage() {
-//                return message;
-//            }
-//
-//            public List<Map<String, String>> getErrors() {
-//                return errors;
-//            }
-//
-//        }
     }
-}
+        /**
+         * エラーレスポンスのクラス
+         */
+        public static final class ErrorResponse {
+            private final HttpStatus status;
+            private final String message;
+            private final List<Map<String, String>> errors;
+
+            public ErrorResponse(HttpStatus status, String message, List<Map<String, String>> errors) {
+                this.status = status;
+                this.message = message;
+                this.errors = errors;
+            }
+
+            public HttpStatus getStatus() {
+                return status;
+            }
+
+            public String getMessage() {
+                return message;
+            }
+
+            public List<Map<String, String>> getErrors() {
+                return errors;
+            }
+
+        }
+    }
+

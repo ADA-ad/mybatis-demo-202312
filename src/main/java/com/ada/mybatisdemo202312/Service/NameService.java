@@ -29,11 +29,6 @@ public class NameService {
         Optional<Name> name = this.nameMapper.findById(id);
 
         return name.orElseThrow(() -> new NameNotFoundException("user could not be found"));
-//        if (name.isPresent()) {
-//            return name.get();
-//        } else {
-//            throw new NameNotFoundException("user could not be found");
-//        }
     }
 
     public Name insert(String name, String email) {
