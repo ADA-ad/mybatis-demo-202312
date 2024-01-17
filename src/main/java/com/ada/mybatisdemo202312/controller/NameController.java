@@ -5,6 +5,7 @@ import com.ada.mybatisdemo202312.controller.request.NameUpdateRequest;
 import com.ada.mybatisdemo202312.controller.response.NameCreateResponse;
 import com.ada.mybatisdemo202312.entity.Name;
 import com.ada.mybatisdemo202312.Service.NameService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +65,7 @@ public class NameController {
 
     @PatchMapping("/names/{id}")
     public ResponseEntity<NameCreateResponse> updateName(@PathVariable Integer id,
-                                                         @RequestBody NameUpdateRequest nameUpdateRequest,
+                                                         @RequestBody @Valid NameUpdateRequest nameUpdateRequest,
                                                          UriComponentsBuilder uriComponentsBuilder) {
         Name name = nameService.updateName(id, nameUpdateRequest);
         URI location = uriComponentsBuilder.path("/names/{id}").buildAndExpand(name.getId()).toUri();

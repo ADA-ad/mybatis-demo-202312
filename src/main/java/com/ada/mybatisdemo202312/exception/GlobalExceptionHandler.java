@@ -1,5 +1,6 @@
 package com.ada.mybatisdemo202312.exception;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
@@ -10,18 +11,21 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(NameNotFoundException.class)
-    public ResponseEntity<ErrorObject> handleNameNotFoundException(NameNotFoundException ex, WebRequest request) {
-        ErrorObject errorObject = new ErrorObject();
-
-        errorObject.setStatusCode(HttpStatus.NOT_FOUND.value());
-        errorObject.setMessage(ex.getMessage());
-        errorObject.setTimestamp(new Date());
-        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
+        @ExceptionHandler(value = NameNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleUserNotFoundException(
+            NameNotFoundException e, HttpServletRequest request) {
+        Map<String, String> body = Map.of(
+                "timestamp", ZonedDateTime.now().toString(),
+                "status", String.valueOf(HttpStatus.NOT_FOUND.value()),
+                "error", HttpStatus.NOT_FOUND.getReasonPhrase(),
+                "message", e.getMessage(),
+                "path", request.getRequestURI());
+        return new ResponseEntity(body, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
