@@ -21,11 +21,12 @@ public class NameService {
     }
 
     public Name findName(int id) {
-        Optional<Name> name = this.nameMapper.findById(id);
-        if (name.isPresent()) {
-            return name.get();
-        } else {
-            throw new NameNotFoundException("user not found");
-        }
+        return this.nameMapper.findById(id).orElseThrow(()-> new NameNotFoundException("user not found"));
+//        Optional<Name> name = this.nameMapper.findById(id);
+//        if (name.isPresent()) {
+//            return name.get();
+//        } else {
+//            throw new NameNotFoundException("user not found");
+//        }
     }
 }
