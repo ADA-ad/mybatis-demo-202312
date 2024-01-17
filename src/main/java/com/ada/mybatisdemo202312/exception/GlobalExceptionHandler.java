@@ -9,11 +9,13 @@ import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.ZonedDateTime;
 import java.util.*;
 
+//@RestControllerAdvice
 @ControllerAdvice
 public class GlobalExceptionHandler {
         @ExceptionHandler(value = NameNotFoundException.class)
@@ -49,7 +51,7 @@ public class GlobalExceptionHandler {
                     }
                 };
         return ResponseEntity.badRequest().body(errorResponse);
-//
+
 //        /**
 //         * エラーレスポンスのクラス
 //         */
